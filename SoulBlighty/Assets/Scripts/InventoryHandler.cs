@@ -11,6 +11,7 @@ public class InventoryHandler : MonoBehaviour
     private bool isActive;
     public bool paused;
     public StateCheck _checkInv;
+    public Animator playerAnimator;
 
 	// Use this for initialization
 	void Start ()
@@ -22,21 +23,29 @@ public class InventoryHandler : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetButtonDown("Inventory"))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button3) && isActive == false)
         {
-            //_checkInv.UpdateInventory();
-            isActive = !isActive;
-            InventoryCanvas.SetActive(isActive);
-            paused = !paused;
+            //StartCoroutine("OpenBackpack"); 
+            playerAnimator.Play("player_backpack");
+            isActive = true;
         }
 
-        if (paused)
+        if (Input.GetKeyDown(KeyCode.Joystick1Button3) && isActive == true)
         {
-            Time.timeScale = 0;
-        }
-        else if (!paused)
-        {
-            Time.timeScale = 1;
+            //StartCoroutine("OpenBackpack"); 
+            playerAnimator.Play("Idle Blend Tree");
+            isActive = false;
         }
     }
+
+    /*
+    IEnumerator OpenBackpack()
+    {
+        playerAnimator.Play("player_backpack");
+        yield return new WaitForSeconds(.5f);
+        isActive = !isActive;
+        InventoryCanvas.SetActive(isActive);
+        paused = !paused;
+    }
+    */
 }
