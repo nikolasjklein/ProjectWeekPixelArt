@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/damagescene.unity
     guid: 7c6a5e6a3464d364198fbca8fd647df4
+  - enabled: 1
+    path: Assets/Scenes/climbscene.unity
+    guid: ea6e92841c6e0444cb71fa3d15377270
   m_configObjects: {}

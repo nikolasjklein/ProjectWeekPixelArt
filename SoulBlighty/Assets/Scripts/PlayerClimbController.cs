@@ -13,9 +13,13 @@ public class PlayerClimbController : MonoBehaviour
     public bool canClimbRight;
     public bool canReachTop;
     public Animator Shine;
+    public Camera Cam;
+    public Camera SecondCam;
+    public Animator CamAnim;
 
     public void Start()
     {
+        SecondCam.gameObject.SetActive(false);
         Player = this.gameObject;
         canClimbLeft = false;
         canClimbRight = true;
@@ -75,7 +79,8 @@ public class PlayerClimbController : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         this.transform.Translate(Vector3.up * Time.smoothDeltaTime * .375f);
         yield return new WaitForSeconds(.2f);
-        Prompt_Right.gameObject.SetActive(true);
+        if (ClimbState < 16)
+            Prompt_Right.gameObject.SetActive(true);
     }
 
     IEnumerator PlayRightClimbAnim()
@@ -83,12 +88,22 @@ public class PlayerClimbController : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         this.transform.Translate(Vector3.up * Time.smoothDeltaTime * .375f);
         yield return new WaitForSeconds(.2f);
-        Prompt_Left.gameObject.SetActive(true);
+        if (ClimbState < 16)
+            Prompt_Left.gameObject.SetActive(true);
     }
 
     IEnumerator PlayShine()
     {
         yield return new WaitForSeconds(2.6f);
         Shine.Play("shine_glow");
+        StartCoroutine("End");
+    }
+
+    IEnumerator End()
+    {
+        yield return new WaitForSeconds(5f);
+        Cam.gameObject.SetActive(false);
+        SecondCam.gameObject.SetActive(true);
+        CamAnim.Play("cam_end");
     }
 }
